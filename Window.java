@@ -119,7 +119,7 @@ public class Window extends JFrame{
             for(Point p: points){
                 g2d.drawLine(p.x, p.y, p.x, p.y);
             }
-            if(startPressed){
+            if(startPressed && z<9999){
                 g2d.drawOval(points.get(points.size()-1).x, points.get(points.size()-1).y, 3, 3);
                 g2d.setColor(Color.RED);
                 g2d.fillOval(points.get(points.size()-1).x, points.get(points.size()-1).y, 3, 3);
