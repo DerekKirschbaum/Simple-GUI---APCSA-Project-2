@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Window",
+            "request": "launch",
+            "mainClass": "Window",
+            "projectName": "Simple-GUI---APCSA-Project-2_6a32508e"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
