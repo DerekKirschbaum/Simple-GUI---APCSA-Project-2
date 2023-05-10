@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import java.util.ArrayList;
 
 
@@ -19,6 +18,7 @@ public class Window extends JFrame{
     private int speed = 1;
     private Timer t;
 
+    //constructor
     public Window(){
         JPanel bp = new JPanel(new FlowLayout());
         JButton start = new JButton("Start");
@@ -30,6 +30,7 @@ public class Window extends JFrame{
         bp.add(js);
         bp.add(l2);
         
+        //slider bar change listener
         js.addChangeListener(new ChangeListener () {
             public void stateChanged(ChangeEvent e) {
                 l.setText("     Speed : " + ((JSlider)e.getSource()).getValue());
@@ -37,11 +38,11 @@ public class Window extends JFrame{
             }
         });
 
+        //start button action listener
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 startPressed = true;
                 p.repaint();
-                //requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
 
@@ -59,6 +60,7 @@ public class Window extends JFrame{
         setVisible(true);
         requestFocus();
 
+        //updateTask runs every 'delay' msec based on timer
         ActionListener updateTask = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -74,20 +76,20 @@ public class Window extends JFrame{
         };
         
         t = new Timer(((int)(1000/(Math.pow((double)speed, 2.0)))), updateTask);
-        t.start();// Allocate a Timer to run updateTask's actionPerformed() after every delay msec
+        t.start(); // Allocate a Timer to run updateTask's actionPerformed() after every delay msec
         
     }
 
+    //adds new point to animation
     public void update(){
-        //250,10
-        //50,400
-        //450, 400    
+        //Triangle vertices: (250,60), (50,450) (450, 450)
         int vert = (int) (Math.random()*3) + 1;
         x = newX(x, vert);
         y = newY(y, vert);
         points.add(new Point(x, y));
     }
 
+    //helper method
     public int newX(int x, int vert){
         if(vert == 1){
             return (x+50)/2;
@@ -97,7 +99,7 @@ public class Window extends JFrame{
             return (x+250)/2;
         }
     }
-
+    //helper method
     public int newY(int y, int vert){
         if(vert == 1){
             return (y+450)/2;
@@ -108,28 +110,13 @@ public class Window extends JFrame{
         }
     }
 
-
+    
     class Panel extends JPanel{
-    
-        public void doDrawing(Graphics g){
-    
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawLine(x, y, x, y);
-
-    
-            //g2d.drawLine(50,400,250,10);
-            //g2d.drawLine(50,400,450,400);
-            //g2d.drawLine(250,10,450,400);
-    
-    
-        }
-    
-    
+        //Paints points onto JPanel
         @Override
         public void paintComponent(Graphics g){
             
             super.paintComponent(g);
-            doDrawing(g);
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(Color.BLACK);
             for(Point p: points){
@@ -143,15 +130,13 @@ public class Window extends JFrame{
             
             int a = (int)(1000/(Math.pow((double)speed, 2.0)));
             t.setDelay(a);
-            System.out.println(a);
-
             
         }
     }
     
 
     public static void main(String[] args){
-
+        
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
